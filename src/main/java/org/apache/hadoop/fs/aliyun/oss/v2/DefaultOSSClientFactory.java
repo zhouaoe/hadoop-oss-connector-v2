@@ -117,18 +117,11 @@ public class DefaultOSSClientFactory extends Configured implements OSSClientFact
                 AliyunOSSUtils.getCredentialsProvider(conf);
 
         boolean enabledSSL = conf.getBoolean(SECURE_CONNECTIONS_KEY, SECURE_CONNECTIONS_DEFAULT);
+        //getpackage version from pom
 
         String version = this.getClass().getPackage().getImplementationVersion();
-        if (version == null) {
-            // Fallback to getting version from Maven model
-            version = this.getClass().getPackage().getSpecificationVersion();
-            if (version == null) {
-                // Last resort, use the version from POM
-                version = "3.3.5-2.0.25-alpha"; // This is the project version from pom.xml
-            }
-        }
         String useragent = conf.get(USER_AGENT_PREFIX, USER_AGENT_PREFIX_DEFAULT)
-                + ", Hadoop/" + VersionInfo.getVersion() + ", oss/" + (version != null ? version : "unknown");
+                + ", Hadoop/" + VersionInfo.getVersion() + ", Connector/" + (version != null ? version : "unknown-debug03");
 
         ClientConfiguration clientConf = ClientConfiguration.newBuilder()
                 .httpClient(httpClient)
